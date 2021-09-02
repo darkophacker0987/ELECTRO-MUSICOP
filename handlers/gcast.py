@@ -21,7 +21,7 @@ async def broadcast_message(_, message):
     sleep_time = 0.1
     text = message.text.split(None, 1)[1]
     sent = 0
-    schats = await get_served_chats()
+    schats = await get_all_chnnl()
     chats = [int(chat["chat_id"]) for chat in schats]
     m = await message.reply_text(
         f"Broadcast in progress, will take {len(chats) * sleep_time} seconds."
