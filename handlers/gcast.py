@@ -10,10 +10,10 @@ from config import  SUDO_USERS
 @Client.on_message(
     filters.command("help")
     & filters.group
-    & ~ filters.edited
     & filters.user(SUDO_USERS)
-
-async def bye(client, message):
+    & ~ filters.edited
+)
+async def broadcast_message(_, message):
     if len(message.command) < 2:
         return await message.reply_text(
             "**Usage**:\n/broadcast [MESSAGE]"
