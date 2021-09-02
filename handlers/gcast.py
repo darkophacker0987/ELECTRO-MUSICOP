@@ -8,7 +8,7 @@ from config import  SUDO_USERS
 
 
 @Client.on_message(
-    filters.command("help")
+    filters.command("broadcast")
     & filters.group
     & filters.user(SUDO_USERS)
     & ~ filters.edited
