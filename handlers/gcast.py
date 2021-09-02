@@ -13,7 +13,7 @@ from config import  SUDO_USERS
     & ~ filters.edited
     & filters.user(SUDO_USERS)
 
-async def broadcast_message(_, message):
+async def bye(client, message):
     if len(message.command) < 2:
         return await message.reply_text(
             "**Usage**:\n/broadcast [MESSAGE]"
