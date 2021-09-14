@@ -5,10 +5,13 @@ from config import BOT_NAME as bn
 from helpers.filters import other_filters2
 
 
-@Client.on_message(other_filters2)
-async def start(_, message: Message):
-
-await message.reply_text("""**Yes iᴍ online ✅**""",
+@Client.on_message(
+    filters.command("help")
+    & filters.private
+    & ~ filters.edited
+)
+async def help_(client: Client, message: Message):
+      await message.reply_text("""**Yes iᴍ online ✅**""",
       reply_markup=InlineKeyboardMarkup(
             [
                 [
