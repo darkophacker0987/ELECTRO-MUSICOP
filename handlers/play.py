@@ -129,7 +129,7 @@ async def play(_, message: Message):
         await USER.get_chat(chid)
     except:
         await lel.edit(
-            f"<i>Hey {user.first_name}, @camilaowner assistant userbot is not in this chat, ask admin to send /play command for first time to add it.</i>")
+            f"<i>Hey {user.first_name}, @BESTIES_PLAYER assistant userbot is not in this chat, ask admin to send /play command for first time to add it.</i>")
         return
     
     audio = (message.reply_to_message.audio or message.reply_to_message.voice) if message.reply_to_message else None
@@ -143,7 +143,7 @@ async def play(_, message: Message):
 
         file_name = get_file_name(audio)
         title = file_name
-        thumb_name = "https://telegra.ph/file/5b2ed5398e7cc024c8838.jpg"
+        thumb_name = "https://telegra.ph/file/5791ec0de6fc2f6428b83.jpg"
         thumbnail = thumb_name
         duration = round(audio.duration / 60)
         views = "Locally added"
@@ -152,7 +152,7 @@ async def play(_, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text="Channel 🔊",
+                        text="ßƐSŦĪƐS ZᎾИƐ",
                         url="https://t.me/BONDOFBESTIZZ")
                    
                 ]
@@ -190,7 +190,7 @@ async def play(_, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text="Channel 🔊",
+                        text="ßƐSŦĪƐS ZᎾИƐ",
                         url="https://t.me/BONDOFBESTIZZ")
                    
                 ]
@@ -198,14 +198,14 @@ async def play(_, message: Message):
         )
         except Exception as e:
             title = "NaN"
-            thumb_name = "https://telegra.ph/file/5b2ed5398e7cc024c8838.jpg"
+            thumb_name = "https://telegra.ph/file/5791ec0de6fc2f6428b83.jpg"
             duration = "NaN"
             views = "NaN"
             keyboard = InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton(
-                        text="Channel 🔊",
+                        text="ßƐSŦĪƐS ZᎾИƐ",
                         url="https://t.me/BONDOFBESTIZZ")
                    
                 ]
@@ -255,7 +255,7 @@ async def play(_, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text="Channel 🔊",
+                        text="ßƐSŦĪƐS ZᎾИƐ",
                         url="https://t.me/BONDOFBESTIZZ")
                    
                 ]
