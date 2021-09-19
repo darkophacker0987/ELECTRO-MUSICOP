@@ -324,8 +324,7 @@ from PIL import Image, ImageFont, ImageDraw
 @Client.on_message(filters.command("ytplay") & filters.group & ~filters.edited)
 async def ytplay(_, message: Message):
     global que
-    if message.chat.id in DISABLED_GROUPS:
-        return
+
     lel = await message.reply("🔁 **Processing Song**")
     administrators = await get_administrators(message.chat)
     chid = message.chat.id
