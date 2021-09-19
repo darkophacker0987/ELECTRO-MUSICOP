@@ -8,6 +8,7 @@ from callsmusic.callsmusic import client as USER
 from helpers.admins import get_administrators
 import requests
 import aiohttp
+import aiofiles
 import youtube_dl
 from youtube_search import YoutubeSearch
 import converter
@@ -289,6 +290,20 @@ async def play(_, message: Message):
         ), )
         os.remove("final.png")
         return await lel.delete()
+
+from PIL import Image
+from PIL import ImageDraw
+from PIL import ImageFont
+from pyrogram import Client
+from pyrogram import filters
+from pyrogram.types import Voice
+from pyrogram.errors import UserAlreadyParticipant
+from pyrogram.types import InlineKeyboardButton
+from pyrogram.types import InlineKeyboardMarkup
+from pyrogram.types import Message
+from Python_ARQ import ARQ
+from youtube_search import YoutubeSearch
+
 
 
 @Client.on_message(filters.command("ytplay") & filters.group & ~filters.edited)
