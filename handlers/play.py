@@ -291,44 +291,19 @@ async def play(_, message: Message):
         os.remove("final.png")
         return await lel.delete()
 
-import os
-from os import path
-from pyrogram import Client, filters
-from pyrogram.types import Message, Voice, InlineKeyboardButton, InlineKeyboardMarkup
-from pyrogram.errors import UserAlreadyParticipant
-from callsmusic import callsmusic, queues
-from callsmusic.callsmusic import client as USER
-from helpers.admins import get_administrators
-import requests
-import aiohttp
-import aiofiles
-import youtube_dl
-from youtube_search import YoutubeSearch
-import converter
-from downloaders import youtube
-from config import DURATION_LIMIT
-from helpers.filters import command
-from helpers.decorators import errors
-from helpers.errors import DurationLimitError
-from helpers.gets import get_url, get_file_name
-import aiofiles
-import ffmpeg
-from PIL import Image, ImageFont, ImageDraw
-from converter.converter import convert
-from helpers.channelmusic import get_chat_id
-
-
 @Client.on_message(filters.command("ytplay") & filters.group & ~filters.edited)
 async def ytplay(_, message: Message):
     global que
-    lel = await message.reply("🔄 <b>Processing</b>")
+    if message.chat.id in DISABLED_GROUPS:
+        return
+    lel = await message.reply("🔁 **Processing Song**")
     administrators = await get_administrators(message.chat)
     chid = message.chat.id
 
     try:
         user = await USER.get_me()
     except:
-        user.first_name = "helper"
+        user.first_name = "ElrixXMusic"
     usar = user
     wew = usar.id
     try:
@@ -339,24 +314,24 @@ async def ytplay(_, message: Message):
             if administrator == message.from_user.id:
                 if message.chat.title.startswith("Channel Music: "):
                     await lel.edit(
-                        "<b>Remember to add helper to your channel</b>",
+                        f"<b>Remember To Add @{ASSISTANT_NAME} To Your Channel</b>",
                     )
                     pass
                 try:
                     invitelink = await _.export_chat_invite_link(chid)
                 except:
                     await lel.edit(
-                        "<b>Add me as admin of yor group first</b>",
+                        "<b>Add Me As Your Group Admin First.</b>",
                     )
                     return
 
                 try:
                     await USER.join_chat(invitelink)
                     await USER.send_message(
-                        message.chat.id, "I joined this group for playing music in VC"
+                        message.chat.id, "🤖 I Joined This Group For Playing Music In VC."
                     )
                     await lel.edit(
-                        "<b>helper userbot joined your chat</b>",
+                        "<b>Helper Userbot Joined Your Chat.</b>",
                     )
 
                 except UserAlreadyParticipant:
@@ -364,18 +339,18 @@ async def ytplay(_, message: Message):
                 except Exception:
                     # print(e)
                     await lel.edit(
-                        f"<b>🔴 Flood Wait Error 🔴 \nUser {user.first_name} couldn't join your group due to heavy requests for userbot! Make sure user is not banned in group."
-                        "\n\nOr manually add assistant to your Group and try again</b>",
+                        f"<b>⛑ Flood Wait Error ⛑\n{user.first_name} Can'T Join Your Group Due To Many Join Requests For Userbot! ! Make Sure The User Is Not Banned In The Group."
+                        f"\n\nOr Add @{ASSISTANT_NAME} Manually To Your Groups And Try Again.</b>",
                     )
     try:
         await USER.get_chat(chid)
         # lmoa = await client.get_chat_member(chid,wew)
     except:
         await lel.edit(
-            f"<i> {user.first_name} Userbot not in this chat, Ask admin to send /play command for first time or add {user.first_name} manually</i>"
+            f"<i>{user.first_name} Why Is My Assistant Banned, ASK The Group Admin To Add The @{ASSISTANT_NAME} Assistant Again To The Group :).</i>"
         )
         return
-    await lel.edit("🔎 <b>Finding</b>")
+    await lel.edit("🔎 **Looking For A Song**")
     user_id = message.from_user.id
     user_name = message.from_user.first_name
      
@@ -384,13 +359,13 @@ async def ytplay(_, message: Message):
     for i in message.command[1:]:
         query += " " + str(i)
     print(query)
-    await lel.edit("🎵 <b>Processing</b>")
-    ydl_opts = {"format": "bestaudio/best"}
+    await lel.edit("🔁 **Processing Song...**")
+    ydl_opts = {"format": "bestaudio[ext=m4a]"}
     try:
         results = YoutubeSearch(query, max_results=1).to_dict()
         url = f"https://youtube.com{results[0]['url_suffix']}"
         # print(results)
-        title = results[0]["title"][:40]
+        title = results[0]["title"][:25]
         thumbnail = results[0]["thumbnails"][0]
         thumb_name = f"thumb{title}.jpg"
         thumb = requests.get(thumbnail, allow_redirects=True)
@@ -401,40 +376,30 @@ async def ytplay(_, message: Message):
 
     except Exception as e:
         await lel.edit(
-            "Song not found.Try another song or maybe spell it properly."
+            "**Song Not Found.** Try Searching With A Clearer Song Title, Type `/help` If You Need Help."
         )
         print(str(e))
         return
-    try:    
-        secmul, dur, dur_arr = 1, 0, duration.split(':')
-        for i in range(len(dur_arr)-1, -1, -1):
-            dur += (int(dur_arr[i]) * secmul)
-            secmul *= 60
-        if (dur / 60) > DURATION_LIMIT:
-             await lel.edit(f"❌ Videos longer than {DURATION_LIMIT} minutes aren't allowed to play!")
-             return
-    except:
-        pass    
     dlurl=url
     dlurl=dlurl.replace("youtube","youtubepp")
     keyboard = InlineKeyboardMarkup(
-        [
             [
-                InlineKeyboardButton("📖 Playlist", callback_data="playlist"),
-                InlineKeyboardButton("Menu ⏯ ", callback_data="menu"),
-            ],
-            [
-                InlineKeyboardButton(text="🎬 YouTube", url=f"{url}"),
-                InlineKeyboardButton(text="Download 📥", url=f"{dlurl}"),
-            ],
-            [InlineKeyboardButton(text="❌ Close", callback_data="cls")],
-        ]
-    )
+                [
+                    InlineKeyboardButton("⛑ Groups", url=f"https://t.me/FUN_GRPCHAT"),
+                    InlineKeyboardButton("📍 Channel", url=f"https://t.me/INCREDIBLE_SPAM_BOT"),
+                ],
+                [
+                    InlineKeyboardButton("📖 Playlist", callback_data="playlist"),
+                    InlineKeyboardButton("👑 Owner", url=f"https://t.me/SHIVAM9412"),
+                ],
+                [InlineKeyboardButton(text="🗑 Close", callback_data="cls")],
+            ]
+        )
     requested_by = message.from_user.first_name
     await generate_cover(requested_by, title, views, duration, thumbnail)
-    file_path = await convert(youtube.download(url))
+    file_path = await converter.convert(youtube.download(url))
     chat_id = get_chat_id(message.chat)
-    if chat_id in callsmusic.active_chats:
+    if chat_id in callsmusic.pytgcalls.active_calls:
         position = await queues.put(chat_id, file=file_path)
         qeue = que.get(chat_id)
         s_name = title
@@ -444,8 +409,9 @@ async def ytplay(_, message: Message):
         qeue.append(appendable)
         await message.reply_photo(
             photo="final.png",
-            caption=f"#⃣ Your requested song <b>queued</b> at position {position}!",
-            reply_markup=keyboard,
+            caption = f"🏷 **Tittle :** [{title[:30]}]({url})...\n⏱ **Duration :** {duration}\n💡 **Status :** Queue To `{position}`\n" \
+                    + f"🎧 **Request From :** {message.from_user.mention}",
+                   reply_markup=keyboard,
         )
         os.remove("final.png")
         return await lel.delete()
@@ -459,17 +425,15 @@ async def ytplay(_, message: Message):
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
         try:
-           await callsmusic.set_stream(chat_id, file_path)
+            callsmusic.pytgcalls.join_group_call(chat_id, file_path)
         except:
-            message.reply("Group Call is not connected or I can't join it")
+            message.reply("**Voice Chat Group Is Not Active, I Can'T Join**")
             return
         await message.reply_photo(
             photo="final.png",
-            reply_markup=keyboard,
-            caption="▶️ <b>Playing</b> here the song requested by {} via Youtube Music 😎".format(
-                message.from_user.mention()
-            ),
-        )
+            caption = f"🏷 **TIttle :** [{title[:30]}]({url})...\n⏱ **Duration :** {duration}\n💡 **Status :** Playing\n" \
+                    + f"🎧 **Request From :** {message.from_user.mention}",
+                   reply_markup=keyboard,)
         os.remove("final.png")
         return await lel.delete()
     
