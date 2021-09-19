@@ -303,6 +303,7 @@ from pyrogram.types import InlineKeyboardMarkup
 from pyrogram.types import Message
 from Python_ARQ import ARQ
 from youtube_search import YoutubeSearch
+from converter.converter import convert
 
 
 
