@@ -315,6 +315,7 @@ import aiofiles
 import ffmpeg
 from PIL import Image, ImageFont, ImageDraw
 from converter.converter import convert
+from helpers.channelmusic import get_chat_id
 
 
 @Client.on_message(filters.command("ytplay") & filters.group & ~filters.edited)
